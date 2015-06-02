@@ -15,7 +15,7 @@ HEX_MAXIMUM_SIZE = 30720
 #MONITOR_PORT = /dev/ttyUSB0
 MONITOR_CMD = screen
 
-CFLAGS = -std=gnu99
+CXXFLAGS = -std=c++11
 
 #include ../../Arduino.mk
 include /usr/share/arduino/Arduino.mk
