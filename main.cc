@@ -5,9 +5,6 @@
 #define TIMER_SCALE Timer::SCALE_DIV_1024
 #define delay Timer::msec2ticks<TIMER_DIV>(1000.0)
 
-#define ledpin 5			// pin 13 (onboard LED)
-#define baudrate 9600			// 9600 19200 38400 57600 115200
-
 enum { NUM_LEDS = 27, };
 const uint8_t LED[NUM_LEDS][2] = {
     {10,  9}, {10,  8}, {10,  7},
