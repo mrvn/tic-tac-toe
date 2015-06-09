@@ -24,7 +24,7 @@ int main() {
   Timer1 timer1;
   timer1.wave(Timer1::WAVE_NORMAL);
   timer1.scale(TIMER_SCALE);
-  int16_t update = timer1.value() + delay;
+  int16_t update = timer1.value();
   uint16_t count = 0;
 
   DDRD = 0xFF;				// set all pins to output
