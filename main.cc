@@ -3,7 +3,7 @@
 #include "timer.h"
 #define TIMER_DIV 1024
 #define TIMER_SCALE Timer::SCALE_DIV_1024
-#define delay Timer::msec2ticks<TIMER_DIV>(1000.0)
+#define delay Timer::usec2ticks<TIMER_DIV>(100.0)
 
 enum { NUM_LEDS = 27, };
 const uint8_t LED[NUM_LEDS][2] = {
