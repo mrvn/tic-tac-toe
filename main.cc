@@ -8,7 +8,8 @@
 class Display {
 public:
   //  Display() : leds_(0x0FA688LU), count_(0) {
-  Display() : leds_(0x7FAC688), count_(0) {
+  Display() : leds_(0x7FAC688), bright_(~0x7000000),
+              count_(0), frame_(0) {
     DDRD = 0xFF;				// set pin to output
     DDRB = 0x3F;				// set pin to output
     PORTD = 0;
@@ -20,15 +21,27 @@ public:
     PORTD = 0;
     PORTB = 0;
   }
+  static bool test(uint32_t val, uint32_t mask) {
+    return (val & mask) != 0;
+  }
   void tick() {
     // turn on LED[count_]
     uint16_t bits = OFF;
-    if ((leds_ & (1LU << count_)) != 0) {
+    uint32_t mask = 1LU << count_;
+    bool on = test(leds_, mask);
+    if ((frame_ % 8) != 0) {
+      on &= test(bright_, mask);
+    }
+    if (on) {
       bits = bits ^ (1 << LED[count_][0]) ^ (1 << LED[count_][1]);
     }
     PORTD = bits & 0xFF;
     PORTB = bits >> 8;
-    count_ = (count_ + 1) % NUM_LEDS;
+    ++count_;
+    if (count_ >= NUM_LEDS) {
+      count_= 0;
+      ++frame_;
+    }
   }
 private:
   enum {
@@ -37,7 +50,9 @@ private:
   };
   static const uint8_t LED[NUM_LEDS][2];
   uint32_t leds_;
+  uint32_t bright_;
   uint32_t count_;
+  uint32_t frame_;
 };
 
 const uint8_t Display::LED[NUM_LEDS][2] = {
